@@ -108,6 +108,19 @@ app.get("/employee1", (req, res) => {
   })
 
 
+  app.get("/getAll", (req, res)=>{
+
+    db.query("SELECT * FROM employee", (err, result, fileds)=>{
+        if(err){
+            throw err;
+        }
+
+        console.log(result);
+        res.send(JSON.stringify(result, null, "  "))
+    })
+  })
+
+
 
 app.listen(3000, ()=>{
     console.log(`This server is running on 3000 port`);
