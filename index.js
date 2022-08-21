@@ -192,7 +192,7 @@ app.get("/employee1", (req, res) => {
   app.get("/sortresult", (req, res)=>{
 
 
-    const query = "SELECT * FROM employee ORDER BY address"
+    const query = "SELECT * FROM employee ORDER BY address DESC"
 
     db.query(query, (err, result, fileds)=>{
         if(err){
