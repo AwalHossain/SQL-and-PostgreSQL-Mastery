@@ -127,12 +127,40 @@ app.get("/employee1", (req, res) => {
 
   app.get("/filter", (req, res)=>{
 
-    db.query("SELECT * FROM employee WHERE address='france'", (err, result, fileds)=>{
+    // wildcard characters
+    /** '%' wildcard to represent zero, one or multiple */
+
+    const query = "SELECT * FROM employee WHERE name LIKE 'A%'"
+
+    // filter for getting specific
+    // "SELECT * FROM employee WHERE address='france'"
+    db.query(query, (err, result, fileds)=>{
         if(err){
             throw err;
         }
 
-        console.log(result, "file", fileds);
+        console.log(result, "file");
+        res.send(JSON.stringify(result, null, "  "))
+    })
+  })
+
+
+  /** Escaping query values to prevetn sql injections */
+
+  app.get("/filter1", (req, res)=>{
+
+    // escape query values by using the place holder ? method
+    const name = "Jake Smith";
+    const query = "SELECT * FROM employee WHERE name= ?"
+
+    
+
+    db.query(query, [name], (err, result, fileds)=>{
+        if(err){
+            throw err;
+        }
+
+        console.log(result, "file");
         res.send(JSON.stringify(result, null, "  "))
     })
   })
