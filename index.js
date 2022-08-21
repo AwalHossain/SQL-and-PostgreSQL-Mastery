@@ -188,6 +188,23 @@ app.get("/employee1", (req, res) => {
   })
 
 
+  /** Sort the result by name */
+  app.get("/sortresult", (req, res)=>{
+
+
+    const query = "SELECT * FROM employee ORDER BY address"
+
+    db.query(query, (err, result, fileds)=>{
+        if(err){
+            throw err;
+        }
+
+        console.log(result, "file");
+        res.send(JSON.stringify(result, null, "  "))
+    })
+  })
+
+
 app.listen(3000, ()=>{
     console.log(`This server is running on 3000 port`);
 })
