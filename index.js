@@ -166,6 +166,28 @@ app.get("/employee1", (req, res) => {
   })
 
 
+  /** Filtering data with multiple vlues */
+
+  app.get("/filter2", (req, res)=>{
+
+    // escape query values by using the place holder ? method
+    const name = "Jake Smith";
+    const adr = "USa";
+    const query = "SELECT * FROM employee WHERE name= ? OR address= ?"
+
+    
+
+    db.query(query, [name, adr], (err, result, fileds)=>{
+        if(err){
+            throw err;
+        }
+
+        console.log(result, "file");
+        res.send(JSON.stringify(result, null, "  "))
+    })
+  })
+
+
 app.listen(3000, ()=>{
     console.log(`This server is running on 3000 port`);
 })
