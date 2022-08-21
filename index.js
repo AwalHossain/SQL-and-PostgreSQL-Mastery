@@ -108,6 +108,8 @@ app.get("/employee1", (req, res) => {
   })
 
 
+  /** Get all the user altogether */
+
   app.get("/getAll", (req, res)=>{
 
     db.query("SELECT * FROM employee", (err, result, fileds)=>{
@@ -120,6 +122,20 @@ app.get("/employee1", (req, res) => {
     })
   })
 
+
+  // Filter records from a table 
+
+  app.get("/filter", (req, res)=>{
+
+    db.query("SELECT * FROM employee WHERE address='france'", (err, result, fileds)=>{
+        if(err){
+            throw err;
+        }
+
+        console.log(result, "file", fileds);
+        res.send(JSON.stringify(result, null, "  "))
+    })
+  })
 
 
 app.listen(3000, ()=>{
