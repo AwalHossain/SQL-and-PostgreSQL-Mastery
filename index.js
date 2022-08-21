@@ -42,7 +42,7 @@ app.get('/createdb', (req, res)=>{
 //Create table 
 
 app.get("/createemployee", (req, res)=>{
-    let sql = "CREATE TABLE employee(id int AUTO_INCREMENT, name VARCHAR(255), designation VARCHAR(255), PRIMARY KEY(id))";
+    let sql = "CREATE TABLE employee(id int AUTO_INCREMENT, name VARCHAR(255), designation VARCHAR(255),address VARCHAR(255), PRIMARY KEY(id))";
 
     db.query(sql, (err)=>{
         if(err){
@@ -60,16 +60,16 @@ app.get("/employee1", (req, res) => {
 
     let post = { name: "Jake Smith", designation: "Chief Executive Officer" };
   
-    let sql = "INSERT INTO employee SET ?";
+    let sql = "INSERT INTO employee(name, address, designation) VALUES ('De more', 'France', 'Higway 45')";
   
-    let query = db.query(sql, post, (err) => {
+    let query = db.query(sql, post, (err, result) => {
   
       if (err) {
   
         throw err;
   
       }
-  
+      console.log(result);
       res.send("Employee 1 added");
   
     });
