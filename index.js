@@ -205,6 +205,26 @@ app.get("/employee1", (req, res) => {
   })
 
 
+
+
+  /** Limit the result */
+  app.get("/sortresult", (req, res)=>{
+
+
+    const query = "SELECT * FROM employee LIMIT 2"
+
+    db.query(query, (err, result, fileds)=>{
+        if(err){
+            throw err;
+        }
+
+        console.log(result, "file");
+        res.send(JSON.stringify(result, null, "  "))
+    })
+  })
+
+
+
 app.listen(3000, ()=>{
     console.log(`This server is running on 3000 port`);
 })
