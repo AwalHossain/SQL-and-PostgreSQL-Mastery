@@ -5,6 +5,7 @@ const mysql = require('mysql')
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer')
 
 router.post('/signup', async(req,res)=>{
     let {name, contactNumber, status, role, password, email} = req.body;
@@ -74,5 +75,55 @@ router.post('/login',async(req, res)=>{
 
 })
 
+
+
+let transporter = nodemailer.createTransport({
+        service: 'Yandex',
+        auth:{
+            user: process.env.EMAIL,
+            pass: process.env.PASS
+        }
+})
+
+/** Forget password */
+
+router.post('/forgetpassword', (req, res)=>{
+    let user = req.body;
+    let query = "select email, password from user where email=?"
+
+    console.log(process.env.EMAIL, process.env.PASS);
+    db.query(query,[user.email], (err, result)=>{
+        if(!err){
+            if(result.length <=0 ){
+                res.status(200).json({msg: "your mail is not enlisted"})
+            }else{
+                let mailOptions = {
+                    from: process.env.EMAIL,
+                    to: result[0].email,
+                    subject: "Password by cafe management",
+                    html: `<p>
+                        <b>Your login detail are </b> </br>
+                        <b> ${result[0].password}</b>
+                    </p>`
+                }
+
+                transporter.sendMail(mailOptions, (err, info)=>{
+                    if(err){
+                        res.status(500).json({msg: err})
+                    }else{
+                       if(info.response){
+
+                           res.status(200).json({msg: "YOur password sent successfully"})
+                       }
+                    }
+                })
+
+               
+            }
+        }else{
+            res.status(500).json({msg: err})
+        }
+    })
+})
 
 module.exports = router
