@@ -7,6 +7,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const authGuard = require('../services/authGuard');
+const checkRole = require('../services/checkRole');
 
 router.post('/signup', async(req,res)=>{
     let {name, contactNumber, status, role, password, email} = req.body;
@@ -147,8 +148,22 @@ router.get('/getAll', authGuard,(req, res)=>{
         }
     })
 })
-router.put('/update', (req, res)=>{
+router.put('/update', authGuard, checkRole, (req, res)=>{
+    let user = req.body;
+    let query = "update user set status=? where id=?";
 
+    db.query(query, [user.id, user.status], (err, result)=>{
+        console.log(result);
+        if(!err){
+            if(result.affectedRows == 0){
+                res.status(500).json({mag: "User id doesn't exist"})
+            }else{
+                res.status(200).json({msg: "Updated"}) 
+            }
+        }else{
+            res.status(500).json(err)   
+        }
+    })
 })
 // router.get('/getAll', (req, res)=>{
 

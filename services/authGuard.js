@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 function authGuard( req,res, next){
     const  {authorization} = req.headers;
 
-    const token = authorization.split(" ")[1];
+    const token = authorization && authorization.split(" ")[1];
 
     const response = jwt.verify(token, process.env.ACCESS_TOKEN, (err, response)=>{
         if(!err){
