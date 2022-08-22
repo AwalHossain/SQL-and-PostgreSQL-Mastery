@@ -5,7 +5,8 @@ const mysql = require('mysql')
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
+const authGuard = require('../services/authGuard');
 
 router.post('/signup', async(req,res)=>{
     let {name, contactNumber, status, role, password, email} = req.body;
@@ -125,5 +126,32 @@ router.post('/forgetpassword', (req, res)=>{
         }
     })
 })
+
+
+
+/** Get all the user */
+
+router.get('/getAll', authGuard,(req, res)=>{
+    
+    let query = "select * from user "
+
+    db.query(query, (err, result)=>{
+        if(!err){
+            if(result.length <=0){
+                res.status(200).json({msg: "There are no user in this table"})
+            }else if(result.length > 0){
+                return res.status(200).json(result)
+            }
+        }else{
+            res.status(500).json(err)
+        }
+    })
+})
+router.put('/update', (req, res)=>{
+
+})
+// router.get('/getAll', (req, res)=>{
+
+// })
 
 module.exports = router
