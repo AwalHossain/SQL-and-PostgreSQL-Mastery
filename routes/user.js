@@ -165,8 +165,40 @@ router.put('/update', authGuard, checkRole, (req, res)=>{
         }
     })
 })
-// router.get('/getAll', (req, res)=>{
 
-// })
+
+//Change password
+
+router.post('/changePassword', authGuard, (req, res)=>{
+    const email = res.locals.email;
+    const {oldPassword, newPassword} = req.body;
+    let query = "select * from user where email=?";
+
+    db.query(query, [email], (err, result)=>{
+        if(!err){
+            const passCompare =  bcrypt.compareSync(oldPassword, result[0].password)
+            console.log(result, passCompare);
+            if( !passCompare){
+                return res.status(400).json({msg: "Password is incorrect"})
+            } else if(passCompare){
+
+                query = "update user set password=? where email=?";
+                let encrypt = bcrypt.hashSync(newPassword,10)
+                db.query(query, [encrypt, email], (err, result)=>{
+                    if(!err){
+                        return res.status(200).json({msg: "YOur password has been sucessfully changed"})
+                    }else{
+                        return res.status(500).json(err)
+                    }
+                })
+
+            }else{
+                return res.status(500).json(err)
+            }
+        }else{
+            return res.status(500).json({msg: "Something went wrong, please try again later"})
+        }
+    })
+})
 
 module.exports = router
