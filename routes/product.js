@@ -39,7 +39,7 @@ router.get('/get', authGuard, (req, res) => {
 
 router.get("/categoryId/:id", authGuard,(req, res)=>{
     const id = req.params.id
-    let query = "select id, name from product where categoryId=? and status='true'";
+    let query = "select id, name from productg where categoryId=? and status='true'";
 
     db.query(query, [id], (err, result)=>{
         if(!err){
@@ -49,6 +49,11 @@ router.get("/categoryId/:id", authGuard,(req, res)=>{
         }
     })
 })
+
+
+/** Update the product status */
+
+router.put('/updateStatus', authGuard, checkRole, (req, res))
 
 
 module.exports = router;
