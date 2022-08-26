@@ -71,6 +71,46 @@ router.put('/updateStatus', authGuard, checkRole, (req, res)=>{
 })
 
 
+/** Update Product Status */
+router.put('/updateStatus', authGuard, (err, result)=>{
+        let {status, id} = req.body;
+        let query = "update product set status=? where id=?"
+
+        db.query(query, [status, id], (err, result)=>{
+            if(!err){
+                if(result.affectedRows === 0){
+                    return res.status(500).json({msg:"Product id is inccorect"});
+                }
+                return res.status(500).json({msg: "Product status updated successfully"});
+            }else{
+                return res.status(500).json(err);
+            }
+        })
+})
+
+
+
+/** Delete Product */
+
+router.delete('/delete/:id', authGuard, (err, result)=>{
+    const id = req.params.id;
+
+    let query = "delete from product where id=?";
+
+    db.query(query, [id],authGuard, (err, result)=>{
+
+        if(!err){
+            if(result.affectedRows === 0){
+                return res.status(404).json({msg: "Product id doesn't found"});
+            }
+            return res.status(200).json({msg:"your product has been successfully deleted"});
+        }else{
+            return res.status(500).json(err);
+        }
+    })
+})
+
+
 
 
 
