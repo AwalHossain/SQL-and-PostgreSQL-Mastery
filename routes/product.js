@@ -51,6 +51,22 @@ router.get("/categoryId/:id", authGuard,(req, res)=>{
 })
 
 
+/** Get product by id */
+
+router.get('/getById/:id', authGuard, (req, res)=>{
+    let query = "select id,name, description, price from product where id=?"
+
+
+    db.query(query, [query], (err, result)=>{
+        if(!err){
+            return res.status(200).json(result[0]);
+        }else{
+            return res.status(500).json(err);
+        }
+    })
+})
+
+
 /** Update the product status */
 
 router.put('/updateStatus', authGuard, checkRole, (req, res)=>{
