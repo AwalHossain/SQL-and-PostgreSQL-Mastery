@@ -53,7 +53,25 @@ router.get("/categoryId/:id", authGuard,(req, res)=>{
 
 /** Update the product status */
 
-router.put('/updateStatus', authGuard, checkRole, (req, res))
+router.put('/updateStatus', authGuard, checkRole, (req, res)=>{
+    const {name, categoryId, description, price, id} = req.body;
+    query = "update product set name=?, categoryId=?, description=?, price=? where id=?";
+
+    db.query(query, [name, categoryId, description, price, id], (err, result)=>{
+        if(!err){
+            if(!result.affectedRows === 0){
+                return res.status(400).json({msg:"Your product id is incorrect"});
+            }
+
+            return res.status(200).json({msg:"Your code updated sucessfully"});
+        }else{
+            return res.status(500).json(err);
+        }
+    })
+})
+
+
+
 
 
 module.exports = router;
