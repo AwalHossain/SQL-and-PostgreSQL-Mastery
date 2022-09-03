@@ -3,11 +3,11 @@ const mysql = require('mysql');
 
 console.log(process.env.DB_USER);
 let connection = mysql.createConnection({
-    port:process.env.DB_PORT,
-    host:process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    port:3306,
+    host:"localhost",
+    user: "bhuiyan",
+    password: "3zS,Z-@cly2f",
+    database: "bhuiyantrad_bhuiyanproject"
 })
 
 
