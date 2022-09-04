@@ -5,10 +5,10 @@ console.log(process.env.DB_USER);
 let connection = mysql.createPool({
     connectionLimit:10,
     port:3306,
-    host:"localhost",
-    user: "root",
-    password: "password",
-    database: "cafenodejs"
+    host:"sql.freedb.tech",
+    user: "freedb_bhuiyan",
+    password: "GU4VCu!7jrr$X*k",
+    database: "freedb_bhuiya_db"
 })
 
 

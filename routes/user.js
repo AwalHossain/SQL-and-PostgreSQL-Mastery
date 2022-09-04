@@ -10,10 +10,9 @@ const authGuard = require('../services/authGuard');
 const checkRole = require('../services/checkRole');
 
 router.post('/signup', async(req,res)=>{
-    let {name, contactNumber, status, role, password, email} = req.body;
+    let {name, password, email} = req.body;
     console.log("oso");
-    const hashedPass = await bcrypt.hash(password, 10);
-    let query  = "select email, password, role, status from user where email=?"  
+    let query  = "select email, password, name from User where email=?"  
     try{
         db.query(query,[email], (err, result)=>{
             if(!err){
@@ -21,9 +20,9 @@ router.post('/signup', async(req,res)=>{
                 if(result.length >0){
                     return res.status(400).json({msg:"Email already exist"})
                 }else{
-                    query = "insert into user(name, email, contactNumber, password, status, role) values (?,?,?,?,'false','user')";
+                    query = "insert into User(email,name, password) values (?,?,?)";
 
-                    db.query(query, [name, email, contactNumber, hashedPass], (err, result)=>{
+                    db.query(query, [ email,name, password], (err, result)=>{
                         if(!err){
                             return res.status(201).json({mesg: "Successfully registered"})
                         }else{
