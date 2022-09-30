@@ -4,3 +4,4 @@ CREATE TABLE cities (
   population INTEGER,
   area INTEGER
 );
+
