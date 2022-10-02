@@ -5,3 +5,5 @@ select name || ', ' || country from citites;  /* Mergign two or multiple string 
 
 
 select upper(concat(name, ', ' , country)) as location  from cities; /* Works fine in MysQL and PostgreSQL */
+
+
