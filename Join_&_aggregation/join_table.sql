@@ -1,0 +1,1 @@
+select contents, username from comments join users on comments.user_id = users.id;
