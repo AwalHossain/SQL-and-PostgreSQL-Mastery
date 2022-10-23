@@ -16,3 +16,12 @@ FROM
   comments
 GROUP BY
   photo_id;
+
+
+  -- Get authors name with number of book they have published
+
+  SELECT name, count(*)
+  FROM books
+  join author
+  on author.id= books.id
+  GROUP BY author.name 
