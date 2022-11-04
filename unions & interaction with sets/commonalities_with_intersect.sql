@@ -6,7 +6,7 @@
 
 -- INTERSECT ALL  find the rows common in the results of two queries
 
--- EXCEPT  find the rows that are present in the first query but not second query
+-- EXCEPT  find the rows that are present in the first query but not second query. Remove duplicates
 
 -- EXCEPT ALL find the rows that are present in first query but not second query
 
