@@ -1,5 +1,5 @@
 -- Find the 4 products with the highest price and 4 products with the highest price/weight ratio
-
+-- union keyword merge two query at the same time and show result all-together
 
 (SELECT *
 FROM products
