@@ -9,3 +9,5 @@ WHERE price >(
     FROM products 
     WHERE department = 'Toys'
 );
+
+
