@@ -3,6 +3,6 @@
 
 SELECT name, price,
 
-price/(SELECT MAX(price) from phones)
+price/(SELECT MAX(price) from phones) as price_ratio
 
 from phones
