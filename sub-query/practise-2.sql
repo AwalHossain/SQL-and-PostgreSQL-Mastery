@@ -10,4 +10,4 @@ SELECT
     ) as min_price,
     (
          SELECT avg(price) FROM phones
-    ) as avg,
+    ) as avg
