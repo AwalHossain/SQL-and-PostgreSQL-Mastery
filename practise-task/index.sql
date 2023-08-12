@@ -158,3 +158,39 @@ ORDER BY EXTRACT(MONTH FROM order_date);
 
 
 
+-- Task 6: Using JOINs and Aggregation Create two tables named "employees" and "salaries" with columns as follows:
+
+DROP TABLE if EXISTS salaries;
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    department_id INT
+);
+
+CREATE TABLE salaries (
+    emp_id INT,
+    salary DECIMAL(10, 2)
+);
+
+INSERT INTO employees (emp_id, emp_name, department_id)
+VALUES
+    (1, 'John Doe', 1),
+    (2, 'Jane Smith', 2),
+    (3, 'Michael Johnson', 1),
+    (4, 'Emily Brown', 3);
+
+INSERT INTO salaries (emp_id, salary)
+VALUES
+    (1, 50000.00),
+    (2, 60000.00),
+    (3, 55000.00),
+    (4, 52000.00);
+
+
+-- Write an SQL query to retrieve the department name and the average salary of employees in each department, excluding departments with fewer than two employees.
+
+SELECT e.department_id, avg(s.salary) as avg_salry from employees e 
+JOIN salaries s ON e.emp_id = s.emp_id
+GROUP BY e.department_id
+HAVING COUNT(e.emp_id) >=2;
