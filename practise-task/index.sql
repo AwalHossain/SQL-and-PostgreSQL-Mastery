@@ -106,6 +106,7 @@ VALUES
 
 
     -- Task 4: Multiple Joins and Aggregation Create three tables named "employees," "departments," and "salaries" with columns as follows:
+
     -- Write an SQL query to retrieve the department name and the average salary of employees working in each department. Sort the results by the average salary in descending order
 
     SELECT d.department_name, avg(s.salary)AS average_salary from departments d
@@ -115,3 +116,45 @@ VALUES
     on e.emp_id = s.emp_id
     GROUP BY (d.department_id) 
     ORDER BY average_salary DESC;
+
+
+-- Task 5: Aggregation and Grouping Create a table named "orders" with columns (order_id, customer_id, order_date, total_amount) and insert the following data:
+    CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    total_amount DECIMAL(10, 2)
+);
+
+INSERT INTO orders (order_id, customer_id, order_date, total_amount)
+VALUES
+    (101, 1, '2023-01-05', 200.00),
+    (102, 2, '2023-01-06', 300.00),
+    (103, 1, '2023-02-10', 150.00),
+    (104, 3, '2023-02-15', 400.00),
+    (105, 2, '2023-03-20', 250.00);
+
+-- Write an SQL query to find the total sales amount for each month, along with the number of orders in that month.
+
+SELECT
+    CASE EXTRACT(MONTH FROM order_date)
+        WHEN 1 THEN 'January'
+        WHEN 2 THEN 'February'
+        WHEN 3 THEN 'March'
+        WHEN 4 THEN 'April'
+        WHEN 5 THEN 'May'
+        WHEN 6 THEN 'June'
+        WHEN 7 THEN 'July'
+        WHEN 8 THEN 'August'
+        WHEN 9 THEN 'September'
+        WHEN 10 THEN 'October'
+        WHEN 11 THEN 'November'
+        WHEN 12 THEN 'December'
+    END AS month_name,
+    SUM(total_amount) AS total_sales
+FROM orders
+GROUP BY EXTRACT(MONTH FROM order_date)
+ORDER BY EXTRACT(MONTH FROM order_date);
+
+
+
