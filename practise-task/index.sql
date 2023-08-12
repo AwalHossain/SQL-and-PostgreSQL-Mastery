@@ -66,3 +66,52 @@ SELECT s.student_name, c.course_name, c.credits from enrollment e
  join students s on s.student_id = e.student_id 
  JOIN courses c on c.course_id = e.course_id;
  
+
+
+ CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    department_id INT
+);
+
+CREATE TABLE departments (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(50)
+);
+
+CREATE TABLE salaries (
+    emp_id INT,
+    salary DECIMAL(10, 2)
+);
+
+INSERT INTO employees (emp_id, emp_name, department_id)
+VALUES
+    (1, 'John Doe', 1),
+    (2, 'Jane Smith', 2),
+    (3, 'Michael Johnson', 1),
+    (4, 'Emily Brown', 3);
+
+INSERT INTO departments (department_id, department_name)
+VALUES
+    (1, 'HR'),
+    (2, 'IT'),
+    (3, 'Finance');
+
+INSERT INTO salaries (emp_id, salary)
+VALUES
+    (1, 50000.00),
+    (2, 60000.00),
+    (3, 55000.00),
+    (4, 52000.00);
+
+
+    -- Task 4: Multiple Joins and Aggregation Create three tables named "employees," "departments," and "salaries" with columns as follows:
+    -- Write an SQL query to retrieve the department name and the average salary of employees working in each department. Sort the results by the average salary in descending order
+
+    SELECT d.department_name, avg(s.salary)AS average_salary from departments d
+    JOIN employees e 
+    on d.department_id = e.department_id
+    join salaries s
+    on e.emp_id = s.emp_id
+    GROUP BY (d.department_id) 
+    ORDER BY average_salary DESC;
