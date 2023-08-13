@@ -194,3 +194,81 @@ SELECT e.department_id, avg(s.salary) as avg_salry from employees e
 JOIN salaries s ON e.emp_id = s.emp_id
 GROUP BY e.department_id
 HAVING COUNT(e.emp_id) >=2;
+
+
+
+-- Task 7: Using HAVING with Aggregation Create a table named "products" with columns (product_id, product_name, stock_quantity) and insert the following data:
+
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50),
+    stock_quantity INT
+);
+
+INSERT INTO products (product_id, product_name, stock_quantity)
+VALUES
+    (101, 'Widget A', 20),
+    (102, 'Widget B', 10),
+    (103, 'Widget C', 15),
+    (104, 'Widget D', 5);
+
+-- Write an SQL query to find the product names and their total sales quantity for products with a total sales quantity greater than 5.
+
+SELECT p.product_name, SUM(s.sales_quantity) AS total_sales_quantity
+FROM products p
+JOIN sales s ON p.product_id = s.product_id
+GROUP BY p.product_name
+HAVING SUM(s.sales_quantity) > 5;
+
+
+-- Task 8: Combining Multiple Joins Create three tables named "customers," "orders," and "order_items" with columns as follows:
+
+
+DROP TABLE if EXISTS customers;
+
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    city VARCHAR(50)
+);
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE
+);
+
+CREATE TABLE order_items (
+    item_id INT PRIMARY KEY,
+    order_id INT,
+    product_name VARCHAR(50),
+    quantity INT
+);
+
+INSERT INTO customers (customer_id, customer_name, city)
+VALUES
+    (1, 'John Doe', 'New York'),
+    (2, 'Jane Smith', 'Los Angeles'),
+    (3, 'Michael Johnson', 'Chicago');
+
+INSERT INTO orders (order_id, customer_id, order_date)
+VALUES
+    (101, 1, '2023-01-05'),
+    (102, 2, '2023-02-10'),
+    (103, 1, '2023-02-15');
+
+INSERT INTO order_items (item_id, order_id, product_name, quantity)
+VALUES
+    (1, 101, 'Widget A', 2),
+    (2, 101, 'Widget B', 3),
+    (3, 102, 'Widget C', 1),
+    (4, 103, 'Widget A', 4);
+
+-- Write an SQL query to retrieve the customer name, order date, and the total quantity of items ordered for each order.
+
+
+SELECT c.customer_name, o.order_date, COUNT(DISTINCT ot.quantity) from customers c
+join orders o on o.customer_id = c.customer_id
+join order_items ot on o.order_id = ot.order_id
+GROUP BY c.customer_name, o.order_date;
