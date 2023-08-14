@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { PostService } from "./post.service";
 
 
 
@@ -13,8 +14,9 @@ const createPost = async (req: Request, res: Response) => {
 }
 
 const getAllPosts = async (req: Request, res: Response) => {
+    const options = req.params;
     try{
-        const result = await PostService.getAllPosts()
+        const result = await PostService.getAllPosts(options)
 
         res.send({
             success: true,
@@ -27,42 +29,42 @@ const getAllPosts = async (req: Request, res: Response) => {
 }
 
 
-const deletePost = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id)
-    try{
-        const result = await PostService.deletePost(id)
+// const deletePost = async (req: Request, res: Response) => {
+//     const id = parseInt(req.params.id)
+//     try{
+//         const result = await PostService.deletePost(id)
 
-        res.send({
-            success: true,
-            message: "Post deleted Successfully!",
-            data: result
-        })
+//         res.send({
+//             success: true,
+//             message: "Post deleted Successfully!",
+//             data: result
+//         })
 
-    }catch(err){
-        res.send(err)
+//     }catch(err){
+//         res.send(err)
     
-    }
-}
+//     }
+// }
 
 
-const learnAggregrateAndGrouping = async (req: Request, res: Response) => {
+// const learnAggregrateAndGrouping = async (req: Request, res: Response) => {
 
-    try {
-        const result = await PostService.learnAggregateAndGrouping();
-        res.send({
-            success: true,
-            message: "Result!",
-            data: result
-        })
-    } catch (err) {
-        res.send(err)
-    }
-}
+//     try {
+//         const result = await PostService.learnAggregateAndGrouping();
+//         res.send({
+//             success: true,
+//             message: "Result!",
+//             data: result
+//         })
+//     } catch (err) {
+//         res.send(err)
+//     }
+// }
 
 
 export const PostController = {
     createPost,
     getAllPosts,
-    deletePost,
-    learnAggregrateAndGrouping
+    // deletePost,
+    // learnAggregrateAndGrouping
 }

@@ -1,9 +1,12 @@
-import { Post, PrismaClient } from "@prisma/client";
+import exporess from 'express';
+import { PostController } from './post.controller';
+
+const route = exporess.Router();
 
 
-const prisma = new PrismaClient();
-const createPost = async({data}:Post)=>{
 
-    // 
+route.post('/create-post', PostController.createPost);
+route.get('/', PostController.getAllPosts);
 
-}
+
+export const PostRoute = route;
