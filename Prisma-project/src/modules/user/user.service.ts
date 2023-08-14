@@ -60,3 +60,11 @@ const getSingleUser = async (id: number): Promise<User | null> => {
     )
     return result;
 }
+
+
+export const UserService = {
+    insertIntoDB,
+    insertOrUpdateIntoDB,
+    getUsers,
+    getSingleUser
+}
