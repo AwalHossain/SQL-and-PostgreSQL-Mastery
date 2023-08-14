@@ -9,3 +9,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String
+  role    String
+  Profile Profile?
+  Post    Post[]
+
+  @@map("users")
+}
+
+model Profile {
+  id     Int    @id @default(autoincrement())
+  bio    String
+  userId Int    @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  Post Post[]
+
+  @@map("categories")
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  title      String
+  authorId   Int
+  categoryId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  author     User     @relation(fields: [authorId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@map("posts")
+}
